@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>事件循环 (event loop) | xuexue&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/xuexue.github.io/favicon.ico">
+    <meta name="description" content="编码旅程之旅">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/xuexue.github.io/assets/css/0.styles.7a5e7a97.css" as="style"><link rel="preload" href="/xuexue.github.io/assets/js/app.26b313c0.js" as="script"><link rel="preload" href="/xuexue.github.io/assets/js/3.55ab8f7c.js" as="script"><link rel="preload" href="/xuexue.github.io/assets/js/1.ccc7b171.js" as="script"><link rel="preload" href="/xuexue.github.io/assets/js/20.5b56f59e.js" as="script"><link rel="prefetch" href="/xuexue.github.io/assets/js/10.d5ea2941.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/11.c60611c0.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/12.43ff2c91.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/13.968267db.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/14.b9691cc6.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/15.bcce6671.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/16.6b4c05e2.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/17.e7b8a1eb.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/18.c4a9b032.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/19.eda52677.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/21.8f882aa5.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/4.7f06bff4.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/5.08e79a72.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/6.3d6c4f77.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/7.57f5ec20.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/8.6be52e9b.js"><link rel="prefetch" href="/xuexue.github.io/assets/js/9.2b1bd2ff.js">
+    <link rel="stylesheet" href="/xuexue.github.io/assets/css/0.styles.7a5e7a97.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-1156296a><div data-v-1156296a><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-1156296a data-v-1156296a><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-4e82dffc data-v-1156296a data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>xuexue's blog</h3> <p class="description" data-v-4e82dffc data-v-4e82dffc>编码旅程之旅</p> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><span data-v-4e82dffc>小松菜花</span>
+            
+          <span data-v-4e82dffc>2017 - </span>
+          2021
+        </a></span></div></div> <div class="hide" data-v-1156296a><header class="navbar" data-v-1156296a><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/xuexue.github.io/" class="home-link router-link-active"><img src="/xuexue.github.io/imgs/logo3.jpg" alt="xuexue's blog" class="logo"> <span class="site-name">xuexue's blog</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/xuexue.github.io/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/xuexue.github.io/categories/css/" class="nav-link"><i class="undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/xuexue.github.io/categories/js/" class="nav-link"><i class="undefined"></i>
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/xuexue.github.io/categories/tools/" class="nav-link"><i class="undefined"></i>
+  tools
+</a></li></ul></div></div><div class="nav-item"><a href="/xuexue.github.io/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/xuexue.github.io/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      工具推荐
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/xuexue.github.io/docs/theme-reco/" class="nav-link router-link-active"><i class="undefined"></i>
+  vuepress-reco
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      关于
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/recoluan" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1156296a></div> <aside class="sidebar" data-v-1156296a><div class="personal-info-wrapper" data-v-828910c6 data-v-1156296a><img src="/xuexue.github.io/avatar.jpg" alt="author-avatar" class="personal-img" data-v-828910c6> <h3 class="name" data-v-828910c6>
+    小松菜花
+  </h3> <div class="num" data-v-828910c6><div data-v-828910c6><h3 data-v-828910c6>10</h3> <h6 data-v-828910c6>Articles</h6></div> <div data-v-828910c6><h3 data-v-828910c6>3</h3> <h6 data-v-828910c6>Tags</h6></div></div> <ul class="social-links" data-v-828910c6></ul> <hr data-v-828910c6></div> <nav class="nav-links"><div class="nav-item"><a href="/xuexue.github.io/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/xuexue.github.io/categories/css/" class="nav-link"><i class="undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/xuexue.github.io/categories/js/" class="nav-link"><i class="undefined"></i>
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/xuexue.github.io/categories/tools/" class="nav-link"><i class="undefined"></i>
+  tools
+</a></li></ul></div></div><div class="nav-item"><a href="/xuexue.github.io/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/xuexue.github.io/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      工具推荐
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/xuexue.github.io/docs/theme-reco/" class="nav-link router-link-active"><i class="undefined"></i>
+  vuepress-reco
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      关于
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/recoluan" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav> <ul class="sidebar-links"><li><a href="/xuexue.github.io/docs/theme-reco/" aria-current="page" class="sidebar-link">git</a></li><li><a href="/xuexue.github.io/docs/theme-reco/theme.html" class="sidebar-link">theme</a></li><li><a href="/xuexue.github.io/docs/theme-reco/plugin.html" aria-current="page" class="active sidebar-link">事件循环 (event loop)</a></li><li><a href="/xuexue.github.io/docs/theme-reco/api.html" class="sidebar-link">js</a></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-4e82dffc data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>事件循环 (event loop)</h3> <!----> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><span data-v-4e82dffc>小松菜花</span>
+            
+          <span data-v-4e82dffc>2017 - </span>
+          2021
+        </a></span></div></div> <div data-v-1156296a><main class="page" style="padding-right:0;"><section><div class="page-title"><h1 class="title">事件循环 (event loop)</h1> <div data-v-1ff7123e><i class="iconfont reco-account" data-v-1ff7123e><span data-v-1ff7123e>小松菜花</span></i> <i class="iconfont reco-date" data-v-1ff7123e><span data-v-1ff7123e>5/28/2020</span></i> <!----> <!----></div></div> <div class="theme-reco-content content__default"><div class="custom-block tip"><p class="title"></p><p>1.认识同步，异步。</p> <p>同步：主线程上排队执行的任务，只有前面的任务执行完成，才能执行后面的任务。</p> <p>异步：是指不进入主线程，而是进入任务队列的任务，只有任务队列通知主线程，某个任务可以执行了，该任务才会进入主线程执行，</p> <p>2.了解进程。</p> <p>打开浏览器之后，我们更关心的是渲染进程，渲染进程也是浏览器的核心进程。
+GUI线程: 负责渲染页面，解析html、css;构建DOM树和渲染树。</p> <p>js引擎线程:js引擎线程负责解析和执行js程序，而chrome的V8引擎就是跑在js引擎线程上的,js引擎线程与gui线程相斥，当浏览器执行js程序的时候，GUI渲染线程会保存在一个队列当中，当js程序执行完成，才会接着执行，如果js的执行时间过长，会影响页面渲染的不连贯性。</p> <p>定时触发线程:定时器触发线程是在定时任务完成之后会通知事件触发线程往队列里添加事件。</p> <p>事件触发器:满足触发条件的事件放在任务队列，一些异步的事件会放到异步队列中。
+异步HTTP请求线程:经过ajax请求的，在请求完成时如果有回调函数就通知事件触发线程添加到任务队列中。</p></div><h3 id="event-loop-机制"><a href="#event-loop-机制" class="header-anchor">#</a> Event Loop 机制</h3> <p>以前 js 是在浏览器环境中运行，由于 chrome 对 v8 做了开源；所以 js 有机会在服务端运行；浏览器和 node 都是 js 的运行环境，它们相当于是一个宿主，宿主能提供一个能力能帮助 js 实现 Event Loop</p> <h4 id="event-loop-是什么"><a href="#event-loop-是什么" class="header-anchor">#</a> Event Loop 是什么</h4> <p>Event Loop 是一个程序结构，用于等待和发送信息的事件。 简单说就是在程序中设置 2 个线程，一个负责程序本身的运行，称为“主线程”；另一个负责主线程和其他进程（主要是各种 I/O 操作）的通信 被称为“Event Loop 线程”（也可以翻译为消息线层）</p> <h5 id="异步实现"><a href="#异步实现" class="header-anchor">#</a> 异步实现</h5> <p>1.宏观：浏览器多线程（从宏观来看是多线程实现了异步）</p> <p>2.微观：Event Loop，事件循环（Event Loop 翻译是事件循环，是实现异步的一种机制）</p> <div class="language-script line-numbers-mode"><pre class="language-text"><code>console.log(1)
+setTimeout(function() {
+  console.log(2)
+}, 0)
+Promise.resolve().then(function() {
+  console.log(3)
+})
+console.log(4) // 1 4 3 2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h4 id="宏任务"><a href="#宏任务" class="header-anchor">#</a> 宏任务</h4> <div class="custom-block tip"><p class="title"></p><p>script：script 整体代码</p> <p>setImmediate：node 的一个方法</p> <p>setTimeout 和 setInterval</p> <p>requestAnimationFrame</p> <p>I/O</p> <p>UI rendering</p></div><h4 id="微任务"><a href="#微任务" class="header-anchor">#</a> 微任务</h4> <div class="custom-block tip"><p class="title"></p><p>Object.observe:监听对象变化的一个方法</p> <p>MutationObserver:可以监听 Dom 结构变化的一个 api</p> <p>postMessgae:window 对象通信的一个方法</p> <p>Promise.then catch finally</p></div><div class="language-script line-numbers-mode"><pre class="language-text"><code>async function async1() {
+  console.log('async1 start')
+  await async2()
+  console.log('async1 end')
+}
+
+async function async2() {
+  return Promise.resolve().then(_ =&gt; {
+    console.log('async2 promise')
+  })
+}
+
+console.log('start')
+setTimeout(function() {
+  console.log('setTimeout')
+}, 0)
+
+async1()
+
+new Promise(function(resolve) {
+  console.log('promise1')
+  resolve()
+}).then(function() {
+  console.log('promise2')
+})
+
+/*
+       start
+       async1 start
+       promise1
+       async2 promise
+       promise2
+       async1 end
+       setTimeout
+   */
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div></div></section> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/xuexue.github.io/docs/theme-reco/theme.html" class="prev">
+            theme
+          </a></span> <span class="next"><a href="/xuexue.github.io/docs/theme-reco/api.html">
+            js
+          </a></span></p></div> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:0;" data-v-70334359></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="kanbanniang" data-v-5775ee02><div class="banniang-container" style="display:;" data-v-5775ee02><div class="messageBox" style="right:68px;bottom:290px;display:none;" data-v-5775ee02>
+      欢迎来到我的博客
+    </div> <div class="operation" style="right:90px;bottom:40px;display:;" data-v-5775ee02><i class="kbnfont kbn-ban-home ban-home" data-v-5775ee02></i> <i class="kbnfont kbn-ban-message message" data-v-5775ee02></i> <i class="kbnfont kbn-ban-close close" data-v-5775ee02></i> <a target="_blank" href="https://vuepress-theme-reco.recoluan.com/views/plugins/kanbanniang.html" data-v-5775ee02><i class="kbnfont kbn-ban-info info" data-v-5775ee02></i></a> <i class="kbnfont kbn-ban-theme skin" style="display:;" data-v-5775ee02></i></div> <canvas id="banniang" width="250" height="320" class="live2d" style="right:90px;bottom:-20px;opacity:0.9;" data-v-5775ee02></canvas></div> <div class="showBanNiang" style="display:none;" data-v-5775ee02>
+    看板娘
+  </div></div></div></div>
+    <script src="/xuexue.github.io/assets/js/app.26b313c0.js" defer></script><script src="/xuexue.github.io/assets/js/3.55ab8f7c.js" defer></script><script src="/xuexue.github.io/assets/js/1.ccc7b171.js" defer></script><script src="/xuexue.github.io/assets/js/20.5b56f59e.js" defer></script>
+  </body>
+</html>
